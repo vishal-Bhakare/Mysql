@@ -1,0 +1,170 @@
+Learning Basic SQL Syntax
+Data Types: Understand data types like INT, VARCHAR, DATE, FLOAT, etc.
+CRUD Operations:
+CREATE: Create databases and tables.
+READ: Use SELECT to retrieve data.
+UPDATE: Modify data with UPDATE.
+DELETE: Remove data with DELETE.
+
+Working with Queries
+Filtering Data: Use WHERE, AND, OR, LIKE, and BETWEEN.
+Ordering and Limiting Results: ORDER BY and LIMIT.
+Aggregate Functions: COUNT(), SUM(), AVG(), MIN(), and MAX().
+
+
+
+mysql>create table Employee(empId Int, firstName Varchar(50),lastName Varchar(50),email Varchar(50),mobileNo Bigint, salary Double, Address varchar(256));
+
+
+mysql> show tables;
++---------------------+
+| Tables_in_bridgelab |
++---------------------+
+| employee            |
++---------------------+
+1 row in set (0.00 sec)
+
+mysql> insert into Employee(empId,firstName,lastName,email,mobileNo,salary,Address) values (1,'Vishal','Bhakare','vishal@gmail.com',9823729409,5000000.00,'pune'), (2,'Saurabh','Nimje','Saurabh@gmail.com',9823729409,15000000.00,'
+Mumbai'), (3,'Smit','Dhore','Smit@gmail.com',9823729409,51000000.00,'Nagpur'
+);
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from employee;
++-------+-----------+----------+-------------------+------------+----------+---------+
+| empId | firstName | lastName | email             | mobileNo   | salary   | Address |
++-------+-----------+----------+-------------------+------------+----------+---------+
+|     1 | Vishal    | Bhakare  | vishal@gmail.com  | 9823729409 |  5000000 | pune    |
+|     2 | Saurabh   | Nimje    | Saurabh@gmail.com | 9823729409 | 15000000 | Mumbai  |
+|     3 | Smit      | Dhore    | Smit@gmail.com    | 9823729409 | 51000000 | Nagpur  |
++-------+-----------+----------+-------------------+------------+----------+---------+
+3 rows in set (0.00 sec)
+
+
+mysql> SELECT firstName, lastName, salary FROM Employee;
++-----------+----------+----------+
+| firstName | lastName | salary   |
++-----------+----------+----------+
+| Vishal    | Bhakare  |  5000000 |
+| Saurabh   | Nimje    | 15000000 |
+| Smit      | Dhore    | 51000000 |
++-----------+----------+----------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Employee
+    -> WHERE salary > 60000;
++-------+-----------+----------+-------------------+------------+----------+---------+
+| empId | firstName | lastName | email             | mobileNo   | salary   | Address |
++-------+-----------+----------+-------------------+------------+----------+---------+
+|     1 | Vishal    | Bhakare  | vishal@gmail.com  | 9823729409 |  5000000 | pune    |
+|     2 | Saurabh   | Nimje    | Saurabh@gmail.com | 9823729409 | 15000000 | Mumbai  |
+|     3 | Smit      | Dhore    | Smit@gmail.com    | 9823729409 | 51000000 | Nagpur  |
++-------+-----------+----------+-------------------+------------+----------+---------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Employee order by salary DESC;
++-------+-----------+----------+-------------------+------------+----------+---------+
+| empId | firstName | lastName | email             | mobileNo   | salary   | Address |
++-------+-----------+----------+-------------------+------------+----------+---------+
+|     3 | Smit      | Dhore    | Smit@gmail.com    | 9823729409 | 51000000 | Nagpur  |
+|     2 | Saurabh   | Nimje    | Saurabh@gmail.com | 9823729409 | 15000000 | Mumbai  |
+|     1 | Vishal    | Bhakare  | vishal@gmail.com  | 9823729409 |  5000000 | pune    |
++-------+-----------+----------+-------------------+------------+----------+---------+
+3 rows in set (0.00 sec)
+
+mysql> update Employee set Salary = 75000.00 where empId = 3;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM Employee
+    -> SELECT * FROM Employee;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECT * FROM Employee' at line 2
+mysql> SELECT * FROM Employee;
++-------+-----------+----------+-------------------+------------+----------+---------+
+| empId | firstName | lastName | email             | mobileNo   | salary   | Address |
++-------+-----------+----------+-------------------+------------+----------+---------+
+|     1 | Vishal    | Bhakare  | vishal@gmail.com  | 9823729409 |  5000000 | pune    |
+|     2 | Saurabh   | Nimje    | Saurabh@gmail.com | 9823729409 | 15000000 | Mumbai  |
+|     3 | Smit      | Dhore    | Smit@gmail.com    | 9823729409 |    75000 | Nagpur  |
++-------+-----------+----------+-------------------+------------+----------+---------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT COUNT(*) AS total_employees FROM Employee;
++-----------------+
+| total_employees |
++-----------------+
+|               3 |
++-----------------+
+1 row in set (0.00 sec)
+
+mysql> select max(salary) as highestSalary from Employee;
++---------------+
+| highestSalary |
++---------------+
+|      15000000 |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> select min(salary) as highestSalary from Employee;
++---------------+
+| highestSalary |
++---------------+
+|         75000 |
++---------------+
+1 row in set (0.00 sec)
+
+
+mysql> select * from Employee where salary between 10000 AND 10000000 And Ad
+dress like %'Nagpur'%;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '%'Nagpur'%' at line 1
+
+mysql> select * from Employee where salary between 10000 AND 10000000 And Address like '%Nagpur%';
+
++-------+-----------+----------+----------------+------------+--------+---------+
+| empId | firstName | lastName | email          | mobileNo   | salary | Address |
++-------+-----------+----------+----------------+------------+--------+---------+
+|     3 | Smit      | Dhore    | Smit@gmail.com | 9823729409 |  75000 | Nagpur  |
++-------+-----------+----------+----------------+------------+--------+---------+
+1 row in set (0.00 sec)
+
+
+mysql> SELECT firstName, lastName, salary AS EmployeeSalary FROM Employee;
++-----------+----------+----------------+
+| firstName | lastName | EmployeeSalary |
++-----------+----------+----------------+
+| Vishal    | Bhakare  |        5000000 |
+| Saurabh   | Nimje    |       15000000 |
+| Smit      | Dhore    |          75000 |
++-----------+----------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> select salary, count(*) As NumberOfEmployee from Employee Group By Sa
+lary;
++----------+------------------+
+| salary   | NumberOfEmployee |
++----------+------------------+
+|    75000 |                1 |
+|  5000000 |                1 |
+| 15000000 |                1 |
++----------+------------------+
+3 rows in set (0.00 sec)
+
+
+mysql> select Avg(salary) as AverageSalary from Employee where salary > 5000
+;
++-----------------+
+| AverageSalary   |
++-----------------+
+| 6691666.6666667 |
++-----------------+
+1 row in set (0.00 sec)
+
+mysql> select salary, count(*) As NumberOfEmployee From Employee Group By salary Having count(*)>0;
++----------+------------------+
+| salary   | NumberOfEmployee |
++----------+------------------+
+|    75000 |                1 |
+|  5000000 |                1 |
+| 15000000 |                1 |
++----------+------------------+
+3 rows in set (0.00 sec)
